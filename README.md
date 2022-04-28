@@ -1,2 +1,2 @@
 # SoupEngine
-Pygame based 2D &amp; 3D Game Engine
+Pygame & OpenGL based 2D & 3D Game Engine
