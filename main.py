@@ -1,6 +1,8 @@
 from window import Window
 from TimeUtil.time import Time
+from Engine.RenderUtil import RenderUtil
 from game import Game
+from OpenGL.GL import glClearColor
 
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 600
@@ -9,9 +11,6 @@ FRAME_C = 5000
 
 
 class Main:
-    isRunning = None
-    game: Game
-
     def __init__(self):
         self.isRunning = False
         self.game = Game()
@@ -33,7 +32,7 @@ class Main:
         frames = 0
         frameCounter = 0
 
-        FRAME_TIME = 1 / FRAME_C
+        FRAME_TIME: float = 1 / FRAME_C
 
         lastTime = Time.get_time()
         unprocessedTime = 0
@@ -66,14 +65,15 @@ class Main:
                     frameCounter = 0
 
             if render:
-                self.render()
+                self.__render()
                 frames += 1
             else:
                 Time.sleep_thread(1 / 1000)
 
         self.__clean()
 
-    def render(self) -> None:
+    def __render(self) -> None:
+        RenderUtil.clear_screen()
         self.game.render()
         Window.render()
 
@@ -83,8 +83,8 @@ class Main:
     @staticmethod
     def main() -> None:
         Window.create_window(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE)
-        game = Main()
-        game.start()
+        RenderUtil.init_graphics()
+        Main().start()
 
 
 if __name__ == '__main__':
